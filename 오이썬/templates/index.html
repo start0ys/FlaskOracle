@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hiddenText{
+            display: none;
+           
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    {% if data %}
+    {% for a in data%}
+    <div>
+        {{a[1]}}
+        {{a[4]}}<br>
+        {{a[2]}}
+        <button id="btnX" onclick="clickX('{{a[0]}}' ,'{{a[3]}}')">❌</button>
+        <button id="modify" onclick="modify('{{a[0]}}' ,'{{a[3]}}')">수정하기</button><br>
+        
+        <div class="hiddenText" id="a{{a[0]}}">
+            <form action="/modify/" method="POST">
+                <div><label for="mdContent">댓글</label></div>
+                <div><textarea name="mdContent" id="mdContent" autofocus required cols="30" rows="10"></textarea></div>
+                
+                <input type="hidden" name="id" id="id" value="{{a[0]}}">
+        
+                <div><input type="submit" value="댓글 수정"></div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif%}
+
+    <br>----------------------------------------------<br><br>
+    <form action="/" method="POST">
+        <div><label for="name">닉네임 : </label><input type="text" id="name" name="name" autofocus required
+                placeholder="닉네임을 작성해주세요">
+            <label for="password">비밀번호 : </label><input type="password" id="password" name="password" autofocus required
+                placeholder="비밀번호를 입력해주세요">
+        </div>
+        <div><label for="content">댓글</label></div>
+        <div><textarea name="content" id="content" autofocus required cols="30" rows="10"></textarea></div>
+
+
+        <div><input type="submit" value="댓글 등록"></div>
+    </form>
+
+
+    <script>
+   
+        function clickX(id,pw){
+            
+            const inputPw = prompt("작성한 댓글의 비밀번호를 입력해주세요")
+            if(pw == inputPw){
+                location.href = '/delete/?id='+id;
+
+            }else {
+                alert("비밀번호가 일치하지 않습니다.")
+            }
+        }
+
+        function modify(id,pw){
+            
+            const inputPw = prompt("작성한 댓글의 비밀번호를 입력해주세요")
+            if(pw == inputPw){
+                var a = "a"+id;
+               
+                var content = document.getElementById(a);
+                content.style.display = "block";
+                
+
+            }else {
+                alert("비밀번호가 일치하지 않습니다.")
+            }
+        }
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
